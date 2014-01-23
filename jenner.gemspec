@@ -17,5 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
-  gem.add_development_dependency 'test-unit', '~> 2.5.5'
+  gem.add_dependency "liquid", "~> 2.6.1"
+  gem.add_dependency "psych", "~> 2.0.2"
+  gem.add_development_dependency "test-unit", "~> 2.5.5"
 end
