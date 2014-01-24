@@ -12,7 +12,8 @@ module Jenner
     end
 
     def generate!
-      FileUtils.mkdir_p(File.join(@root,"public"))
+      FileUtils.rm_rf(File.join(@root,"public"))
+      FileUtils.mkdir(File.join(@root,"public"))
       items.map(&:generate!)
     end
   end

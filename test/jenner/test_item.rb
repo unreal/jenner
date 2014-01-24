@@ -26,6 +26,8 @@ class TestItem < Test::Unit::TestCase
 
   def test_generate!
     item = Jenner::Item.new('test.html',@site)
+    # make the public dir for the item, since @site normally does it
+    FileUtils.mkdir(File.join(@site.root,'public'))
     item.generate!
     assert File.exists?(File.join(@site.root,'public','test.html'))
     assert_equal item.render, File.read(File.join(@site.root,'public','test.html'), encoding: "US-ASCII")
