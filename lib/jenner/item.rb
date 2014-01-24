@@ -15,6 +15,7 @@ module Jenner
       @title         = @header.delete("title")
       @date          = @header.delete("date")
       @template_name = @header.delete("template")
+      @tags          = @header.delete("tags")
       @data          = @header
     end
 
@@ -27,6 +28,7 @@ module Jenner
         'title'         => @title,
         'date'          => @date,
         'template_name' => @template_name,
+        'tags'          => @tags,
         'data'          => @data
       }
     end
