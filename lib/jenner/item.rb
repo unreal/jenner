@@ -33,8 +33,14 @@ module Jenner
       }
     end
 
+    def markdown(s)
+      return s unless @filename.split('.').last == "markdown"
+
+      Maruku.new(s).to_html
+    end
+
     def body
-      Liquid::Template.parse(@body).render('self' => self)
+      markdown(Liquid::Template.parse(@body).render('self' => self))
     end
 
     def render

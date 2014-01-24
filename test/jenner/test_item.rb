@@ -30,4 +30,9 @@ class TestItem < Test::Unit::TestCase
     assert File.exists?(site_file('public/test.html'))
     assert_equal item.render, File.read(site_file('public/test.html'), encoding: "US-ASCII")
   end
+
+  def test_markdown_template
+    item = Jenner::Item.new('markdown_test.markdown', @site)
+    assert_equal "top\nmarkdown test\n2014-01-23 17:02:00 -0600\nwrapper\n\n<h1 id=\"markdown_test\">markdown test</h1>\n\n<p>item content</p>\n\nbottom\n", item.render
+  end
 end

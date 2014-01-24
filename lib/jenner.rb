@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "liquid"
+require "maruku"
 require "psych"
 
 require "jenner/item"
