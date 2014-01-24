@@ -3,6 +3,8 @@ module Jenner
     attr_reader :root
     def initialize(root)
       @root = root
+
+      Liquid::Template.file_system = Jenner::TemplateFileSystem.new(File.join(@root,'_templates'))
     end
 
     def items

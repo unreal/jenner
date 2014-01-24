@@ -6,9 +6,7 @@ module Test
   module Unit
     class TestCase
       def setup
-        Liquid::Template.file_system = Jenner::TemplateFileSystem.new(File.join(File.dirname(__FILE__),'fixtures','source','_templates'))
         @site = Jenner::Site.new(File.join(File.dirname(__FILE__),'fixtures','source'))
-
       end
 
       def template_file(file_name)
