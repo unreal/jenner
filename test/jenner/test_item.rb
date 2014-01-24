@@ -23,7 +23,7 @@ class TestItem < Test::Unit::TestCase
     assert_equal site_file('public/test.html'), item.public_path
   end
 
-  def test_generate
+  def test_generate!
     item = Jenner::Item.new('test.html',@site)
     item.generate!
     assert File.exists?(site_file('public/test.html'))
