@@ -16,7 +16,7 @@ module Test
       end
 
       def site_file(path)
-        File.join(File.dirname(__FILE__),'fixtures','source','_site',path)
+        File.join(File.dirname(__FILE__),'fixtures','source', path)
       end
     end
   end

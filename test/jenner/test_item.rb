@@ -17,4 +17,16 @@ class TestItem < Test::Unit::TestCase
     item = Jenner::Item.new('test.html',@site)
     assert_equal "top\ntest\n2014-01-23 17:02:00 -0600\nwrapper\ntest\nitem content\n\nbottom\n", item.render
   end
+
+  def test_public_path
+    item = Jenner::Item.new('test.html',@site)
+    assert_equal site_file('public/test.html'), item.public_path
+  end
+
+  def test_generate
+    item = Jenner::Item.new('test.html',@site)
+    item.generate!
+    assert File.exists?(site_file('public/test.html'))
+    assert_equal item.render, File.read(site_file('public/test.html'), encoding: "US-ASCII")
+  end
 end

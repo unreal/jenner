@@ -38,5 +38,13 @@ module Jenner
         'item' => self.to_liquid.merge('body' => body)
       )
     end
+
+    def public_path
+      File.join(@site.root,'public',@filename)
+    end
+
+    def generate!
+      File.write(public_path,render)
+    end
   end
 end
