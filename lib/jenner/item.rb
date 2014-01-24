@@ -1,6 +1,6 @@
 module Jenner
   class Item
-    attr_reader :body, :title, :date, :template_name
+    attr_reader :body, :title, :date, :template_name, :data
     def initialize(filename, site)
       @filename = filename
       @site     = site
@@ -12,9 +12,10 @@ module Jenner
         @header = Psych.load($1)
       end
 
-      @title         = @header["title"]
-      @date          = @header["date"]
-      @template_name = @header["template"]
+      @title         = @header.delete("title")
+      @date          = @header.delete("date")
+      @template_name = @header.delete("template")
+      @data          = @header
     end
 
     def template
@@ -26,6 +27,7 @@ module Jenner
         'title'         => @title,
         'date'          => @date,
         'template_name' => @template_name,
+        'data'          => @data
       }
     end
 
