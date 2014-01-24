@@ -24,8 +24,8 @@ TODO: add a `jenner new` command to create site skeleton
 2. `cd my_jenner_site`
 3. `mkdir _site`
 4. `mkdir _templates`
-5. Create a template
-6. Start creating items (pages)
+5. Create a template in `_templates` (e.g. page.html)
+6. Start creating items (pages) in `_site`
 7. `jenner build`
 
 Your generated site will be in `./public`.
