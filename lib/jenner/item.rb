@@ -1,9 +1,11 @@
 module Jenner
   class Item
     attr_reader :body, :title, :date, :template_name
-    def initialize(body, site)
-      @body = body
-      @site = site
+    def initialize(filename, site)
+      @filename = filename
+      @site     = site
+
+      @body = File.read(File.join(@site.root,'_site',@filename), encoding: "US-ASCII")
 
       if @body =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
         @body   = $'
@@ -17,10 +19,6 @@ module Jenner
 
     def template
       Jenner::Template.from_file(File.join(@site.root,'_templates',"#{@template_name}.html"), @site)
-    end
-
-    def self.from_file(file_path, site)
-      new(File.read(file_path, encoding: "US-ASCII"), site)
     end
 
     def to_liquid
