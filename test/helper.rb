@@ -16,6 +16,10 @@ module Test
       def site_file(path)
         File.join(File.dirname(__FILE__),'fixtures','source', path)
       end
+
+      def teardown
+        FileUtils.rm_rf(File.join(File.dirname(__FILE__),'fixtures','source','public'))
+      end
     end
   end
 end

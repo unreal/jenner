@@ -12,6 +12,7 @@ module Jenner
     end
 
     def generate!
+      FileUtils.mkdir_p(File.join(@root,"public"))
       items.map(&:generate!)
     end
   end

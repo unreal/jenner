@@ -27,8 +27,8 @@ class TestItem < Test::Unit::TestCase
   def test_generate!
     item = Jenner::Item.new('test.html',@site)
     item.generate!
-    assert File.exists?(site_file('public/test.html'))
-    assert_equal item.render, File.read(site_file('public/test.html'), encoding: "US-ASCII")
+    assert File.exists?(File.join(@site.root,'public','test.html'))
+    assert_equal item.render, File.read(File.join(@site.root,'public','test.html'), encoding: "US-ASCII")
   end
 
   def test_markdown_template
