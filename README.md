@@ -1,6 +1,8 @@
 # Jenner
 
-Jenner is a static site generator.
+Jenner is a static site generator, named after another Doctor.
+
+![Jenner](http://images.wikia.com/walkingdead/images/archive/3/38/20120814183308!Dr_Edwin_Jenner_TV,_1.jpg)
 
 ## Installation
 
