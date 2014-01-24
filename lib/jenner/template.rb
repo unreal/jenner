@@ -6,7 +6,7 @@ module Jenner
     end
 
     def render(context)
-      ::Liquid::Template.parse(@body).render(context)
+      Liquid::Template.parse(@body).render(context)
     end
 
     def self.from_file(file_path)

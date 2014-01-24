@@ -5,6 +5,10 @@ require 'jenner'
 module Test
   module Unit
     class TestCase
+      def setup
+        Liquid::Template.file_system = Jenner::TemplateFileSystem.new(File.join(File.dirname(__FILE__),'fixtures','source','_templates'))
+      end
+
       def template_file(file_name)
         File.join(File.dirname(__FILE__),'fixtures','source','_templates',file_name)
       end

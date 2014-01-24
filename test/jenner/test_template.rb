@@ -15,4 +15,9 @@ class TestTemplate < Test::Unit::TestCase
     template = Jenner::Template.from_file(template_file('test.html'))
     assert_equal "hi, {{name}}\n", template.body
   end
+
+  def test_include
+    template = Jenner::Template.new("{% include 'test' %}")
+    assert_equal "hi, jay\n", template.render('name' => 'jay')
+  end
 end
