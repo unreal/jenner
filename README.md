@@ -84,6 +84,16 @@ Templates are just HTML files that use Liquid markup. Every item you
 create is rendered with a template that you specify in the item's
 header.
 
+Every item provides the following data at minimum:
+
+    {{item.title}}
+    {{item.date}}
+    {{item.template_name}}
+    {{item.body}}
+
+Additional pieces of data are available within `{{item.data}}` if they
+are defined in the item's YAML header.
+
 You can include other templates with the `{% include %}` tag.
 
     {% include 'some_other_template' %}
