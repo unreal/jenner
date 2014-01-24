@@ -9,7 +9,7 @@ module Jenner
 
       if @body =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
         @body   = $'
-        @header = Psych.load($1)
+        @header = YAML.load($1)
       end
 
       @title         = @header.delete("title")

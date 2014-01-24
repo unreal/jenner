@@ -6,7 +6,7 @@ module Jenner
     end
 
     def items
-      Dir.glob(File.join(@root,"_site","*.html")).inject([]) { |a,i| a << Jenner::Item.new(File.basename(i), self) }
+      Dir.glob(File.join(@root,"_site","*.{html,markdown}")).inject([]) { |a,i| a << Jenner::Item.new(File.basename(i), self) }
     end
 
     def generate!

@@ -1,0 +1,20 @@
+#!/usr/bin/env ruby
+STDOUT.sync = true
+
+require 'bundler/setup'
+require 'jenner'
+require 'mercenary'
+
+Mercenary.program(:jenner) do |p|
+  p.version Jenner::VERSION
+  p.description 'Jenner is an opinionated static site generator'
+
+  p.command(:build) do |c|
+    c.syntax "jenner build"
+    c.description "Builds your Jenner site"
+
+    c.action do |args, options|
+      Jenner.build(args, options)
+    end
+  end
+end
