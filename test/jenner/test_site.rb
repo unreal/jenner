@@ -20,4 +20,14 @@ class TestSite < Test::Unit::TestCase
     @site.generate!
     assert File.exists?(File.join(@site.root,'public','subdirectory','test.png'))
   end
+
+  def test_creates_items_in_subdirectories
+    @site.generate!
+    assert File.exists?(File.join(@site.root,'public','subdirectory','subfile.html'))
+  end
+
+  def test_underscored_items_dont_get_copied
+    @site.generate!
+    assert !File.exists?(site_file('public/_hidden.html'))
+  end
 end
