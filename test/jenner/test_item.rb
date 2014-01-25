@@ -37,4 +37,17 @@ class TestItem < Test::Unit::TestCase
     item = Jenner::Item.new('markdown_test.markdown', @site)
     assert_equal "top\nmarkdown test\n2014-01-23 17:02:00 -0600\nwrapper\n\n<h1 id=\"markdown_test\">markdown test</h1>\n\n<p>item content</p>\n\nbottom\n", item.render
   end
+
+  def test_public_path_on_subdir_item
+    item = Jenner::Item.new("subdirectory/subfile.html",@site)
+    assert_equal site_file("public/subdirectory/subfile.html"), item.public_path
+  end
+
+  def test_generate_on_subdir_item
+    item = Jenner::Item.new("subdirectory/subfile.html",@site)
+    FileUtils.mkdir_p(File.join(@site.root,'public','subdirectory'))
+    item.generate!
+    assert File.exists?(File.join(@site.root,'public','subdirectory','subfile.html'))
+    assert_equal "item: subfile\n", File.read(File.join(@site.root,'public','subdirectory','subfile.html'))
+  end
 end
