@@ -19,6 +19,10 @@ module Jenner
       @data          = @header
     end
 
+    def url
+      "/#{@filename}"
+    end
+
     def template
       Jenner::Template.from_file(File.join(@site.root,'_templates',"#{@template_name}.html"), @site)
     end
@@ -29,7 +33,8 @@ module Jenner
         'date'          => @date,
         'template_name' => @template_name,
         'tags'          => @tags,
-        'data'          => @data
+        'data'          => @data,
+        'url'           => url
       }
     end
 

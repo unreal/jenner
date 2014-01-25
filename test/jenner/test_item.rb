@@ -50,4 +50,14 @@ class TestItem < Test::Unit::TestCase
     assert File.exists?(File.join(@site.root,'public','subdirectory','subfile.html'))
     assert_equal "item: subfile\n", File.read(File.join(@site.root,'public','subdirectory','subfile.html'))
   end
+
+  def test_url
+    item = Jenner::Item.new('test.html',@site)
+    assert_equal "/test.html", item.url
+  end
+
+  def test_url_on_subdir_item
+    item = Jenner::Item.new('subdirectory/subfile.html',@site)
+    assert_equal "/subdirectory/subfile.html", item.url
+  end
 end
