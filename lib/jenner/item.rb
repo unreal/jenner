@@ -55,7 +55,7 @@ module Jenner
     end
 
     def public_path
-      File.join(@site.root,'public',@filename)
+      File.join(@site.root,'public',@filename.sub('.markdown','.html'))
     end
 
     def generate!

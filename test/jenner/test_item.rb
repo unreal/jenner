@@ -38,6 +38,11 @@ class TestItem < Test::Unit::TestCase
     assert_equal "top\nmarkdown test\n2014-01-23 17:02:00 -0600\nwrapper\n\n<h1 id=\"markdown_test\">markdown test</h1>\n\n<p>item content</p>\n\nbottom\n", item.render
   end
 
+  def test_markdown_template_public_path
+    item = Jenner::Item.new('markdown_test.markdown', @site)
+    assert_equal site_file('public/markdown_test.html'), item.public_path
+  end
+
   def test_public_path_on_subdir_item
     item = Jenner::Item.new("subdirectory/subfile.html",@site)
     assert_equal site_file("public/subdirectory/subfile.html"), item.public_path
