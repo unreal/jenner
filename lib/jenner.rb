@@ -1,6 +1,7 @@
 require "bundler/setup"
 require "liquid"
 require "maruku"
+require "sass"
 
 require "jenner/item"
 require "jenner/site"

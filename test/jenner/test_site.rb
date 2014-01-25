@@ -30,4 +30,10 @@ class TestSite < Test::Unit::TestCase
     @site.generate!
     assert !File.exists?(site_file('public/_hidden.html'))
   end
+
+  def test_generates_sass
+    @site.generate!
+    assert File.exists?(site_file("public/test.css"))
+    assert_equal "body {\n  background-color: blue; }\n", File.read(site_file("public/test.css"), encoding: "US-ASCII")
+  end
 end

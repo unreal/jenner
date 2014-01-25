@@ -52,8 +52,14 @@ module Jenner
           FileUtils.mkdir_p(File.join(public_dir,relative_path_to_public(item)))
         else
           next if [".html",".markdown"].include? File.extname(item)
-          destination = File.join(public_dir,relative_path_to_public(item))
-          FileUtils.cp item, destination
+          if File.extname(item) == ".scss"
+            engine = Sass::Engine.new(File.read(item), :syntax => :scss)
+            item = item.sub(".scss",".css")
+            File.write(File.join(public_dir,relative_path_to_public(item)),engine.render)
+          else
+            destination = File.join(public_dir,relative_path_to_public(item))
+            FileUtils.cp item, destination
+          end
         end
       end
       items.map(&:generate!)
