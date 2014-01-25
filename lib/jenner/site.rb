@@ -12,8 +12,7 @@ module Jenner
     end
 
     def files
-      Dir.glob(File.join(site_path,"[^_]*.{html,markdown}")) +
-        Dir.glob(File.join(site_path,"**","[^_]*.{html,markdown}"))
+      Dir.glob(File.join(site_path,"**","[^_]*.{html,markdown}"))
     end
 
     def relative_path(item)
