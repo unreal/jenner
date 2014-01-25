@@ -106,7 +106,7 @@ You can include other templates with the `{% include %}` tag.
 All your other files/subdirectories will be copied over as-is with two
 exceptions:
 
-1. SASS `.scss` files will be processed and copied over as `.css`
+1. [Sass](http://sass-lang.com/) `.scss` files will be processed and copied over as `.css`
 2. Filenames starting with _ will be ignored (e.g. _hidden.html)
 
 
