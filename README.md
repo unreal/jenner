@@ -51,6 +51,7 @@ template can use the following data:
     {{item.data}}  => 2014-01-23 17:02:00 -6
     {{item.template_name}} => "page"
     {{item.body}}  => "<p>This is an example page.</p>
+    {{item.url}}   => "/example.html"
 
 You can define additional pieces of data in the item header like this:
 
@@ -79,7 +80,6 @@ they will be processed as Markdown.
 
     # This is an example page
 
-
 ### Templates
 
 Templates are just HTML files that use Liquid markup. Every item you
@@ -92,6 +92,7 @@ Every item provides the following data at minimum:
     {{item.date}}
     {{item.template_name}}
     {{item.body}}
+    {{item.url}}
 
 Additional pieces of data are available within `{{item.data}}` if they
 are defined in the item's YAML header.
@@ -99,6 +100,14 @@ are defined in the item's YAML header.
 You can include other templates with the `{% include %}` tag.
 
     {% include 'some_other_template' %}
+
+### Other Files and Subdirectories
+
+All your other files/subdirectories will be copied over as-is with two
+exceptions:
+
+1. SASS `.scss` files will be processed and copied over as `.css`
+2. Filenames starting with _ will be ignored (e.g. _hidden.html)
 
 
 ## Contributing
