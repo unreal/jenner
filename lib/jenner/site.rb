@@ -11,9 +11,35 @@ module Jenner
       Dir.glob(File.join(@root,"_site","*.{html,markdown}")).inject([]) { |a,i| a << Jenner::Item.new(File.basename(i), self) }
     end
 
+    def public_dir
+      File.join(@root, "public")
+    end
+
+    def site_dir
+      File.join(@root, "_site")
+    end
+
+    def site_dirs
+      site_dir.split("/")
+    end
+
+    def relative_path_to_public(item)
+      (item.split("/") - site_dirs).join("/")
+    end
+
     def generate!
-      FileUtils.rm_rf(File.join(@root,"public"))
-      FileUtils.mkdir(File.join(@root,"public"))
+      FileUtils.rm_rf(public_dir)
+      FileUtils.mkdir(public_dir)
+
+      base_dirs = File.join(site_dir).split("/")
+      Dir.glob(File.join(@root,"_site","**","*")).each do |item|
+        if File.directory?(item)
+          FileUtils.mkdir_p(File.join(public_dir,relative_path_to_public(item)))
+        else
+          next if [".html",".markdown"].include? File.extname(item)
+          FileUtils.cp item, File.join(public_dir,relative_path_to_public(item))
+        end
+      end
       items.map(&:generate!)
     end
   end

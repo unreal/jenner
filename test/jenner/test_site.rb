@@ -10,4 +10,14 @@ class TestSite < Test::Unit::TestCase
     @site.generate!
     assert File.exists?(site_file('public/test.html'))
   end
+
+  def test_generate_creates_subdirectories
+    @site.generate!
+    assert Dir.exists?(File.join(@site.root,'public','subdirectory'))
+  end
+
+  def test_copies_files_in_subdirectories
+    @site.generate!
+    assert File.exists?(File.join(@site.root,'public','subdirectory','test.png'))
+  end
 end
