@@ -4,6 +4,7 @@ require "maruku"
 require "sass"
 
 require "jenner/item"
+require "jenner/liquid_filters"
 require "jenner/site"
 require "jenner/template"
 require "jenner/template_file_system"

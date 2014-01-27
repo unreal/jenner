@@ -1,11 +1,11 @@
 module Jenner
   class Item
     attr_reader :body, :title, :date, :template_name, :data
-    def initialize(filename, site)
-      @filename = filename
+    def initialize(path, site)
+      @path     = path
       @site     = site
 
-      @body = File.read(File.join(@site.root,'_site',@filename), encoding: "US-ASCII")
+      @body = File.read(File.join(@site.root,'_site',@path), encoding: "US-ASCII")
 
       if @body =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
         @body   = $'
@@ -20,7 +20,7 @@ module Jenner
     end
 
     def url
-      "/#{@filename}"
+      "/#{@path}"
     end
 
     def template
@@ -39,7 +39,7 @@ module Jenner
     end
 
     def markdown(s)
-      return s unless @filename.split('.').last == "markdown"
+      return s unless @path.split('.').last == "markdown"
 
       Maruku.new(s).to_html
     end
@@ -55,7 +55,7 @@ module Jenner
     end
 
     def public_path
-      File.join(@site.root,'public',@filename.sub('.markdown','.html'))
+      File.join(@site.root,'public',@path.sub('.markdown','.html'))
     end
 
     def generate!
