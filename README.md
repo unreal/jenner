@@ -109,6 +109,36 @@ exceptions:
 1. [Sass](http://sass-lang.com/) `.scss` files will be processed and copied over as `.css`
 2. Filenames starting with _ will be ignored (e.g. _hidden.html)
 
+### Liquid Filters
+
+I personally dislike having to write specialized plugins or generators
+to generate my site. By simply adding a couple of filters to Liquid, we
+can easily do just about anything on the item/page level without having
+to write anymore outside Ruby.
+
+    <h1>Page rendering two items</h1>
+    {% 'item_one.html' | item_from_path | assign_to: item_one %}
+    {% 'item_two.html' | item_from_path | assign_to: item_two %}
+
+    <table>
+      <tr>
+        <th>{{item_one.title}}</th>
+        <th>{{item_two.title}}</th>
+      </tr>
+      <tr>
+        <td>{{item_one.body}}</td>
+        <td>{{item_two.body}}</td>
+      </tr>
+    <table>
+
+Some other useful helpers:
+
+    {{ 'test.css' | stylesheet_tag }}
+    {{ 'test.js'  | javascript_tag }}
+    {{ 'page_one.html' | item_from_path | link_to }}
+    {{ 'test.gif' | asset_from_path | assign_to: my_image }}
+    <img src="{{my_image.url}}" />
+
 
 ## Contributing
 
