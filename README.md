@@ -99,7 +99,9 @@ are defined in the item's YAML header.
 
 You can include other templates with the `{% include %}` tag.
 
-    {% include 'some_other_template' %}
+    {% include 'header' %}
+    {{item.body}}
+    {% include 'footer' %}
 
 ### Assets
 
