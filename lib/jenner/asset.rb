@@ -33,6 +33,12 @@ module Jenner
       File.join(@site.root,"public", output_path)
     end
 
+    def to_liquid
+      {
+        'url' => url
+      }
+    end
+
     def generate!
       if sass?
         engine = Sass::Engine.new(File.read(source_path), syntax: :scss)

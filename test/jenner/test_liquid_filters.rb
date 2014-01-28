@@ -14,6 +14,10 @@ class TestLiquidFilters < Test::Unit::TestCase
     assert Variable.new("'test.html' | item_from_path").render(@context).is_a?(Jenner::Item)
   end
 
+  def test_asset_from_path
+    assert Variable.new("'foo.txt' | asset_from_path").render(@context).is_a?(Jenner::Asset)
+  end
+
   def test_assign_to(value, name)
     assert_nil Variable.new("'bar' | assign_to: foo").render(@context)
     assert_equal "bar", @context['foo']

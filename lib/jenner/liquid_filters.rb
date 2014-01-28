@@ -1,5 +1,10 @@
 module Jenner
   module LiquidFilters
+
+    def asset_from_path(path)
+      Jenner::Asset.new(path, @context.registers[:site])
+    end
+
     def item_from_path(path)
       Jenner::Item.new(path, @context.registers[:site])
     end
@@ -20,5 +25,6 @@ module Jenner
     def link_to(item)
       %(<a href="#{item.url}">#{item.title}</a>)
     end
+
   end
 end

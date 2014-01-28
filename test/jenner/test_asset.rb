@@ -43,4 +43,8 @@ class TestAsset < Test::Unit::TestCase
     @asset.generate!
     assert File.exists?(File.join(@site.root,"public","foo.txt"))
   end
+
+  def test_to_liquid
+    assert_equal({'url' => @asset.url}, @asset.to_liquid)
+  end
 end
