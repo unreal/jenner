@@ -3,6 +3,7 @@ require "liquid"
 require "maruku"
 require "sass"
 
+require "jenner/asset"
 require "jenner/item"
 require "jenner/liquid_filters"
 require "jenner/site"

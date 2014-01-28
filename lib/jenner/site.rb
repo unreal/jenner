@@ -11,16 +11,30 @@ module Jenner
       File.join(@root,"_site")
     end
 
-    def files
-      Dir.glob(File.join(site_path,"**","[^_]*.{html,markdown}"))
+    def all_files
+      @all_files ||= Dir.glob(File.join(site_path,"**","[^_]*.*"))
+    end
+
+    def item_files
+      @item_files ||= all_files.select {|f| ['.html','.markdown'].include? File.extname(f) }
+    end
+
+    def asset_files
+      @asset_files ||= all_files - item_files
     end
 
     def relative_path(item)
       (item.split("/") - site_path.split("/")).join("/")
     end
 
+    def assets
+      @assets ||= asset_files.inject([]) { |a,i|
+        a << Jenner::Asset.new(relative_path(i), self)
+      }
+    end
+
     def items
-      files.inject([]) { |a,i|
+      @items ||= item_files.inject([]) { |a,i|
         a << Jenner::Item.new(relative_path(i), self)
       }
     end
@@ -41,26 +55,21 @@ module Jenner
       (item.split("/") - site_dirs).join("/")
     end
 
+    def create_directories!
+      Dir.glob(File.join(@root,"_site","**")).each do |dir|
+        next unless File.directory?(dir)
+
+        FileUtils.mkdir_p(File.join(public_dir,relative_path_to_public(dir)))
+      end
+    end
+
     def generate!
       FileUtils.rm_rf(public_dir)
       FileUtils.mkdir(public_dir)
 
-      base_dirs = File.join(site_dir).split("/")
-      Dir.glob(File.join(@root,"_site","**","*")).each do |item|
-        if File.directory?(item)
-          FileUtils.mkdir_p(File.join(public_dir,relative_path_to_public(item)))
-        else
-          next if [".html",".markdown"].include? File.extname(item)
-          if File.extname(item) == ".scss"
-            engine = Sass::Engine.new(File.read(item), :syntax => :scss)
-            item = item.sub(".scss",".css")
-            File.write(File.join(public_dir,relative_path_to_public(item)),engine.render)
-          else
-            destination = File.join(public_dir,relative_path_to_public(item))
-            FileUtils.cp item, destination
-          end
-        end
-      end
+      create_directories!
+
+      assets.map(&:generate!)
       items.map(&:generate!)
     end
   end

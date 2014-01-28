@@ -36,4 +36,8 @@ class TestSite < Test::Unit::TestCase
     assert File.exists?(site_file("public/test.css"))
     assert_equal "body {\n  background-color: blue; }\n", File.read(site_file("public/test.css"), encoding: "US-ASCII")
   end
+
+  def test_asset_files
+    assert @site.asset_files.include? site_file('_site/test.scss')
+  end
 end
