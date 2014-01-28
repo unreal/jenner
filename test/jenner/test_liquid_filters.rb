@@ -44,8 +44,11 @@ class TestLiquidFilters < Test::Unit::TestCase
 
   def test_items_with_data
     items = Variable.new("'foo' | items_with_data").render(@context)
-    assert items.map(&:path).include?("test.html")
-    assert items.map(&:path).include?("_hidden.html")
+    paths = items.map(&:path)
+    assert paths.include?("test.html")
+    assert paths.include?("_hidden.html")
+    assert paths.include?("markdown_test.markdown")
+    assert !paths.include?("foo.txt")
   end
 
 end
