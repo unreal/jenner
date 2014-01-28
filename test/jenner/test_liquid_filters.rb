@@ -42,4 +42,10 @@ class TestLiquidFilters < Test::Unit::TestCase
     assert Variable.new("'one' | tag").render(@context).is_a?(Jenner::Tag)
   end
 
+  def test_items_with_data
+    items = Variable.new("'foo' | items_with_data").render(@context)
+    assert items.map(&:path).include?("test.html")
+    assert items.map(&:path).include?("_hidden.html")
+  end
+
 end

@@ -13,6 +13,10 @@ module Jenner
       @context.registers[:site].tags.find { |tag| tag.name == name } || "Tag with name '#{name}' not found"
     end
 
+    def items_with_data(key)
+      @context.registers[:site].items.select { |item| item.data.keys.include?(key) }
+    end
+
     def assign_to(value, name)
       @context[name] = value
       nil
