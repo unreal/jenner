@@ -177,6 +177,32 @@ If the custom data you created can be an array, it works on that too:
 
     {{'favorite_colors' | items_with_data: 'blue' | assign_to: items_who_like_blue_and_possibly_other_colors }}
 
+### Custom URL Formatting
+
+By default, all items will be copied over as-is e.g. if your item
+resides in /blog/2014/0128_test_post.html it will end up in
+/public/blog/2014/0128_test_post.html.
+
+You can specify a custom url_format parameter in your YAML item header.
+
+    ---
+    title:      'test post'
+    date:       2014-01-28 15:23:00 -6
+    template:   'post'
+    url_format: '%Y/%m/%d/:title'
+    ---
+
+The formatting will be relative to whatever directory the file resides
+in, and will be processed by using [Ruby's Time#strftime](http://www.ruby-doc.org/core-1.9.3/Time.html#method-i-strftime)
+method on the item's date, and `:title` will be replaced with an
+underscored version of your site's title.
+
+If the above example post resides in /blog, the output file will go to:
+/public/blog/2014/01/28/test-post/index.html. The `{{item.url}}`
+parameter will not include the index.html to keep things pretty. It will
+be: `/blog/2014/01/28/test-post`.
+
+
 ## Contributing
 
 1. Fork it
