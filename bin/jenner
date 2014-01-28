@@ -17,4 +17,13 @@ Mercenary.program(:jenner) do |p|
       Jenner.build(args, options)
     end
   end
+
+  p.command(:serve) do |c|
+    c.syntax "jenner serve"
+    c.description "Serve your Jenner site"
+
+    c.action do |args, options|
+      Jenner.serve(args, options)
+    end
+  end
 end
