@@ -117,8 +117,8 @@ can easily do just about anything on the item/page level without having
 to write anymore outside Ruby.
 
     <h1>Page rendering two items</h1>
-    {% 'item_one.html' | item_from_path | assign_to: item_one %}
-    {% 'item_two.html' | item_from_path | assign_to: item_two %}
+    {{ 'item_one.html' | item_from_path | assign_to: item_one }}
+    {{ 'item_two.html' | item_from_path | assign_to: item_two }}
 
     <table>
       <tr>
