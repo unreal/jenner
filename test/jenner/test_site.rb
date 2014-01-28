@@ -40,4 +40,12 @@ class TestSite < Test::Unit::TestCase
   def test_asset_files
     assert @site.asset_files.include? site_file('_site/test.scss')
   end
+
+  def test_tag_names
+    assert_equal ['one',"three","two"], @site.tag_names.sort
+  end
+
+  def test_tags
+    assert @site.tags.first.is_a? Jenner::Tag
+  end
 end

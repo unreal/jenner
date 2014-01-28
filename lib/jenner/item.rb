@@ -1,6 +1,6 @@
 module Jenner
   class Item
-    attr_reader :body, :title, :date, :template_name, :data
+    attr_reader :path, :body, :title, :date, :template_name, :data, :tags
     def initialize(path, site)
       @path     = path
       @site     = site
@@ -15,7 +15,7 @@ module Jenner
       @title         = @header.delete("title")
       @date          = @header.delete("date")
       @template_name = @header.delete("template")
-      @tags          = @header.delete("tags")
+      @tags          = @header.delete("tags") || []
       @data          = @header
     end
 

@@ -38,4 +38,8 @@ class TestLiquidFilters < Test::Unit::TestCase
       Variable.new("'test.html' | item_from_path | link_to").render(@context)
   end
 
+  def test_tag
+    assert Variable.new("'one' | tag").render(@context).is_a?(Jenner::Tag)
+  end
+
 end

@@ -1,5 +1,6 @@
 module Jenner
   class Asset
+    attr_reader :path
     def initialize(path, site)
       @path = path
       @site = site

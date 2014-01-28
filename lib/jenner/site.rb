@@ -28,14 +28,14 @@ module Jenner
     end
 
     def assets
-      @assets ||= asset_files.inject([]) { |a,i|
-        a << Jenner::Asset.new(relative_path(i), self)
+      @assets ||= asset_files.inject([]) { |a,asset|
+        a << Jenner::Asset.new(relative_path(asset), self)
       }
     end
 
     def items
-      @items ||= item_files.inject([]) { |a,i|
-        a << Jenner::Item.new(relative_path(i), self)
+      @items ||= item_files.inject([]) { |a, item|
+        a << Jenner::Item.new(relative_path(item), self)
       }
     end
 
@@ -49,6 +49,18 @@ module Jenner
 
     def site_dirs
       site_dir.split("/")
+    end
+
+    def tag_names
+      @tag_names ||= items.inject([]) {|a,i|
+        a << i.tags
+      }.flatten.uniq
+    end
+
+    def tags
+      @tags ||= tag_names.inject([]) { |a,tag|
+        a << Jenner::Tag.new(tag, self)
+      }
     end
 
     def relative_path_to_public(item)
