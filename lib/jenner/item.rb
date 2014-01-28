@@ -12,11 +12,15 @@ module Jenner
         @header = YAML.load($1)
       end
 
-      @title         = @header.delete("title")
-      @date          = @header.delete("date")
-      @template_name = @header.delete("template")
-      @tags          = @header.delete("tags") || []
-      @data          = @header
+      begin
+        @title         = @header.delete("title")
+        @date          = @header.delete("date")
+        @template_name = @header.delete("template")
+        @tags          = @header.delete("tags") || []
+        @data          = @header
+      rescue Exception => e
+        raise "Invalid header data on item at path: #{@path}"
+      end
     end
 
     def url
@@ -59,6 +63,8 @@ module Jenner
     end
 
     def generate!
+      return if File.basename(public_path)[0] == "_"
+
       File.write(public_path,render)
     end
   end

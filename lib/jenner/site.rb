@@ -12,7 +12,7 @@ module Jenner
     end
 
     def all_files
-      @all_files ||= Dir.glob(File.join(site_path,"**","[^_]*.*"))
+      @all_files ||= Dir.glob(File.join(site_path,"**","*.*"))
     end
 
     def item_files
