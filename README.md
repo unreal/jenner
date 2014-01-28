@@ -163,6 +163,19 @@ Some other useful helpers:
     {{ 'test.gif' | asset_from_path | assign_to: my_image }}
     <img src="{{my_image.url}}" />
 
+You can also use a couple of filters to grab items by custom data or
+custom data and value combination. For example, say you have a few items
+with an author attribute.
+
+    {{'author' | items_with_data | assign_to: items_with_author_defined}}
+
+Or maybe you just want a certain author:
+
+    {{'author' | items_with_data: 'Mark Twain' | assign_to: items_twain_wrote }}
+
+If the custom data you created can be an array, it works on that too:
+
+    {{'favorite_colors' | items_with_data: 'blue' | assign_to: items_who_like_blue_and_possibly_other_colors }}
 
 ## Contributing
 
