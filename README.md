@@ -101,7 +101,7 @@ You can include other templates with the `{% include %}` tag.
 
     {% include 'some_other_template' %}
 
-### Other Files and Subdirectories
+### Assets
 
 All your other files/subdirectories will be copied over as-is with two
 exceptions:
@@ -109,7 +109,29 @@ exceptions:
 1. [Sass](http://sass-lang.com/) `.scss` files will be processed and copied over as `.css`
 2. Filenames starting with _ will be ignored (e.g. _hidden.html)
 
-### Liquid Filters
+### Tags
+
+Tags are a special addition to the YAML header. You can specify them as
+a YAML string array e.g.:
+
+    ---
+    title:    'Example Page'
+    date:     2014-01-23 17:02:00 -6
+    template: 'page'
+    tags:     [one, two, three]
+    ---
+
+You will have access to the tag names in {{item.tags}}. You can also get
+a tag by name with a Liquid filter.
+
+    {{ 'one' | tag | assign_to: my_tag }}
+
+    {% for item in my_tag.items %}
+      {{item.body}}
+    {% endfor %}
+
+
+### Other Liquid Filters
 
 I personally dislike having to write specialized plugins or generators
 to generate my site. By simply adding a couple of filters to Liquid, we
