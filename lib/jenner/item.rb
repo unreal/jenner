@@ -1,6 +1,7 @@
+# encoding: UTF-8
 module Jenner
   class Item
-    attr_reader :path, :body, :title, :date, :template_name, :data, :tags
+    attr_reader :body, :title, :date, :template_name, :data, :tags
     def initialize(path, site)
       @path     = path
       @site     = site
@@ -17,14 +18,50 @@ module Jenner
         @date          = @header.delete("date")
         @template_name = @header.delete("template")
         @tags          = @header.delete("tags") || []
+        @url_format    = @header.delete("url_format")
         @data          = @header
       rescue Exception => e
         raise "Invalid header data on item at path: #{@path}"
       end
     end
 
+    def relative_path
+      path = File.dirname(@path)
+      return "" if path == "."
+
+      "#{path}/"
+    end
+
+    def path
+      return @path if @url_format.nil?
+
+      if File.extname(url) == ""
+        "#{url}/index.html"
+      else
+        url
+      end
+    end
+
+    def output_filename
+      return "index.html" if File.extname(url) == ""
+
+      File.basename(@path).sub(".markdown",".html")
+    end
+
+    def input_filename
+      File.extname(@path)
+    end
+
     def url
-      "/#{@path}"
+      @url_format.nil? ? "/#{@path.sub(".markdown",".html")}" : formatted_url
+    end
+
+    def underscored_title
+      @title.gsub(/[^\w]+/,"-")
+    end
+
+    def formatted_url
+      "/#{relative_path}#{@date.strftime(@url_format).gsub(":title", underscored_title)}"
     end
 
     def template
@@ -59,12 +96,13 @@ module Jenner
     end
 
     def public_path
-      File.join(@site.root,'public',@path.sub('.markdown','.html'))
+      File.join(@site.root,'public',path.sub('.markdown','.html'))
     end
 
     def generate!
       return if File.basename(public_path)[0] == "_"
 
+      FileUtils.mkdir_p(File.dirname(public_path))
       File.write(public_path,render)
     end
   end
