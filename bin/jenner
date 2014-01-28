@@ -3,47 +3,18 @@ STDOUT.sync = true
 
 require 'bundler/setup'
 require 'jenner'
-require 'trollop'
+require 'mercenary'
 
-SUB_COMMANDS = %w(build)
-global_opts = Trollop::options do
-  banner <<-EOS
-Jenner is a static site generator.
+Mercenary.program(:jenner) do |p|
+  p.version Jenner::VERSION
+  p.description 'Jenner is an opinionated static site generator'
 
-Usage:
-       jenner <cmd> [options]
+  p.command(:build) do |c|
+    c.syntax "jenner build"
+    c.description "Builds your Jenner site"
 
-where <cmd> may be:
-
-       build - build your site
-
-where [options] are:
-  EOS
-  stop_on SUB_COMMANDS
-end
-
-cmd = ARGV.shift
-cmd_opts = case cmd
-  when "build"
-  else
-    Trollop::die "unknown subcommand #{cmd.inspect}"
+    c.action do |args, options|
+      Jenner.build(args, options)
+    end
   end
-
-puts "global options: #{global_opts.inspect}"
-puts "Subcommands: #{cmd.inspect}"
-puts "Subcommand options: #{cmd_opts.inspect}"
-puts "Remaining args: #{ARGV.inspect}"
-
-#Mercenary.program(:jenner) do |p|
-#  p.version Jenner::VERSION
-#  p.description 'Jenner is an opinionated static site generator'
-#
-#  p.command(:build) do |c|
-#    c.syntax "jenner build"
-#    c.description "Builds your Jenner site"
-#
-#    c.action do |args, options|
-#      Jenner.build(args, options)
-#    end
-#  end
-#end
+end

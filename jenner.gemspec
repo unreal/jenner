@@ -19,7 +19,7 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "liquid", "~> 2.6.1"
   gem.add_dependency "maruku", "~> 0.7.1"
+  gem.add_dependency "mercenary", "~> 0.2.1"
   gem.add_dependency "sass", "~> 3.2.13"
-  gem.add_dependency "trollop", "~> 2.0.0"
   gem.add_development_dependency "test-unit", "~> 2.5.5"
 end
