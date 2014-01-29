@@ -1,4 +1,5 @@
 require "bundler/setup"
+require "haml"
 require "liquid"
 require "maruku"
 require "sass"

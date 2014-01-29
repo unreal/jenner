@@ -1,3 +1,4 @@
+# encoding: utf-8
 require 'helper'
 
 class TestTemplate < Test::Unit::TestCase
@@ -19,5 +20,15 @@ class TestTemplate < Test::Unit::TestCase
   def test_include
     template = Jenner::Template.new("{% include 'test' %}", @site)
     assert_equal "hi, jay\n", template.render('name' => 'jay')
+  end
+
+  def test_support_for_haml
+    template = Jenner::Template.from_haml("!!! 5", @site)
+    assert_equal "<!DOCTYPE html>\n", template.render
+  end
+
+  def test_haml_from_file
+    template = Jenner::Template.from_file(template_file('haml_template.haml'), @site)
+    assert_equal "<!DOCTYPE html>\n", template.render
   end
 end

@@ -17,6 +17,7 @@ Gem::Specification.new do |gem|
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
 
+  gem.add_dependency "haml", "~> 4.0.5"
   gem.add_dependency "liquid", "~> 2.6.1"
   gem.add_dependency "maruku", "~> 0.7.1"
   gem.add_dependency "mercenary", "~> 0.2.1"
