@@ -31,7 +31,7 @@ class TestItem < Test::Unit::TestCase
     FileUtils.mkdir(File.join(@site.root,'public'))
     item.generate!
     assert File.exists?(File.join(@site.root,'public','test.html'))
-    assert_equal item.render, File.read(File.join(@site.root,'public','test.html'), encoding: "US-ASCII")
+    assert_equal item.render, File.read(File.join(@site.root,'public','test.html'))
   end
 
   def test_markdown_template
@@ -54,7 +54,7 @@ class TestItem < Test::Unit::TestCase
     FileUtils.mkdir_p(File.join(@site.root,'public','subdirectory'))
     item.generate!
     assert File.exists?(File.join(@site.root,'public','subdirectory','subfile.html'))
-    assert_equal "item: subfile\n", File.read(File.join(@site.root,'public','subdirectory','subfile.html'))
+    assert_equal "item: subfile\n\n", File.read(File.join(@site.root,'public','subdirectory','subfile.html'))
   end
 
   def test_url
@@ -101,5 +101,10 @@ class TestItem < Test::Unit::TestCase
     item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
     item.generate!
     assert File.exists?(site_file("public/blog/2014/01/28/test-post/index.html"))
+  end
+
+  def test_item_from_path
+    item = Jenner::Item.new('embed_test.html', @site)
+    assert_equal "\nsecret: 42\n\n", item.body
   end
 end

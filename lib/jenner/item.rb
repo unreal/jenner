@@ -1,12 +1,12 @@
 # encoding: UTF-8
 module Jenner
   class Item
-    attr_reader :body, :title, :date, :template_name, :data, :tags
+    attr_reader :title, :date, :template_name, :data, :tags
     def initialize(path, site)
       @path     = path
       @site     = site
 
-      @body = File.read(File.join(@site.root,'_site',@path), encoding: "US-ASCII")
+      @body = File.read(File.join(@site.root,'_site',@path))
 
       if @body =~ /\A(---\s*\n.*?\n?)^(---\s*$\n?)/m
         @body   = $'
@@ -68,15 +68,21 @@ module Jenner
       Jenner::Template.from_file(File.join(@site.root,'_templates',"#{@template_name}.html"), @site)
     end
 
-    def to_liquid
+    def to_liquid_without_body
       {
         'title'         => @title,
         'date'          => @date,
         'template_name' => @template_name,
         'tags'          => @tags,
         'data'          => @data,
-        'url'           => url
+        'url'           => url,
       }
+    end
+
+    def to_liquid
+      to_liquid_without_body.merge(
+        'body' => body
+      )
     end
 
     def markdown(s)
@@ -86,12 +92,12 @@ module Jenner
     end
 
     def body
-      markdown(Liquid::Template.parse(@body).render('self' => self))
+      markdown(Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })).to_s.encode("UTF-8")
     end
 
     def render
       template.render(
-        'item' => self.to_liquid.merge('body' => body)
+        'item' => self.to_liquid
       )
     end
 

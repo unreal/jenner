@@ -1,3 +1,4 @@
+# encoding: UTF-8
 module Jenner
   class Template
     attr_reader :body
@@ -7,11 +8,11 @@ module Jenner
     end
 
     def render(context)
-      Liquid::Template.parse(@body).render(context)
+      Liquid::Template.parse(@body).render(context, registers: { site: @site })
     end
 
     def self.from_file(file_path, site)
-      new(File.read(file_path, encoding: 'US-ASCII'), site)
+      new(File.read(file_path), site)
     end
   end
 end

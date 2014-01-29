@@ -19,7 +19,7 @@ class TestLiquidFilters < Test::Unit::TestCase
   end
 
   def test_assign_to(value, name)
-    assert_nil Variable.new("'bar' | assign_to: foo").render(@context)
+    assert_nil Variable.new("'bar' | assign_to: 'foo'").render(@context)
     assert_equal "bar", @context['foo']
   end
 

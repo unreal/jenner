@@ -48,3 +48,5 @@ module Jenner
 
   end
 end
+
+Liquid::Template.register_filter(Jenner::LiquidFilters)
