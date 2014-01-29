@@ -1,7 +1,7 @@
 # encoding: utf-8
 module Jenner
   class Item
-    attr_reader :title, :date, :template_name, :data, :tags
+    attr_reader :title, :date, :template_path, :data, :tags
     def initialize(path, site)
       @path     = path
       @site     = site
@@ -16,7 +16,7 @@ module Jenner
       begin
         @title         = @header.delete("title")
         @date          = @header.delete("date")
-        @template_name = @header.delete("template")
+        @template_path = @header.delete("template")
         @tags          = @header.delete("tags") || []
         @url_format    = @header.delete("url_format")
         @data          = @header
@@ -69,14 +69,14 @@ module Jenner
     end
 
     def template
-      Jenner::Template.from_file(File.join(@site.root,'_templates',"#{@template_name}.html"), @site)
+      Jenner::Template.from_file(File.join(@site.root,'_templates',"#{@template_path}"), @site)
     end
 
     def to_liquid_without_body
       {
         'title'         => @title,
         'date'          => @date,
-        'template_name' => @template_name,
+        'template_path' => @template_path,
         'tags'          => @tags,
         'data'          => @data,
         'url'           => url,

@@ -1,7 +1,7 @@
 ---
 title:      'TEST post'
 date:       2014-01-28 15:23:00 -6
-template:   'post'
+template:   'post.html'
 url_format: '%Y/%m/%d/:title'
 ---
 

@@ -1,7 +1,7 @@
 ---
 title:    'embed test'
 date:     2014-01-23 17:02:00 -6
-template: 'simple'
+template: 'simple.html'
 ---
 {{ '_hidden.html' | item_from_path | assign_to: 'foo' }}
 secret: {{foo.body}}
