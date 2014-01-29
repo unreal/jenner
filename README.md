@@ -34,9 +34,9 @@ Your generated site will be in `./public`.
 
 ### Items
 
-Items can be created as HTML or [HAML](http://haml.info/) files.
+Items can be created as HTML or [Haml](http://haml.info/) files.
 
-Here's an example (example.html):
+Here's an example HTML item:
 
     ---
     title:    'Example Page'
@@ -44,7 +44,32 @@ Here's an example (example.html):
     template: 'page.html'
     ---
 
+    <h1>{{self.title}}</h1>
     <p>This is an example page.</p>
+
+Here's the same example using Haml + Liquid:
+
+    ---
+    title:    'Example Page'
+    date:     2014-01-23 17:02:00 -6
+    template: 'page.html'
+    ---
+
+    %h1 {{self.title}}
+    %p This is an example page.
+
+Here's the same example using Haml directly, not Liquid:
+
+    ---
+    title:    'Example Page'
+    date:     2014-01-23 17:02:00 -6
+    template: 'page.html'
+    ---
+
+    %h1= self.title
+    %p This is an example page.
+
+It's your choice: HTML, HTML + Liquid, Haml, Haml+ Liquid.
 
 This item will be rendered using the `page` template. The `page`
 template can use the following data:
@@ -84,12 +109,12 @@ they will be processed as Markdown.
 
 ### Templates
 
-Templates are just HTML or [HAML](http://haml.info/) files that use
+Templates are just HTML or [Haml](http://haml.info/) files that use
 Liquid markup. Every item you create is rendered with a template that
 you specify in the item's header via the `template` attribute.
 
-HAML templates can use Liquid, but they don't have to. You could simply
-use the template's context in HAML:
+Haml templates can use Liquid, but they don't have to. You could simply
+use the template's context in Haml:
 
     %h1= item.title
     = item.body
