@@ -18,8 +18,13 @@ class TestTemplate < Test::Unit::TestCase
   end
 
   def test_include
-    template = Jenner::Template.new("{% include 'test' %}", @site)
+    template = Jenner::Template.new("{% include 'test.html' %}", @site)
     assert_equal "hi, jay\n", template.render('name' => 'jay')
+  end
+
+  def test_include_haml
+    template = Jenner::Template.new("{% include 'haml_template.haml' %}", @site)
+    assert_equal "<!DOCTYPE html>\n", template.render
   end
 
   def test_support_for_haml

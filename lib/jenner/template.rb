@@ -20,8 +20,7 @@ module Jenner
     end
 
     def self.from_haml(haml_body, site)
-      haml_engine = Haml::Engine.new(haml_body)
-      new(haml_engine.render, site)
+      new(Haml::Engine.new(haml_body).render, site)
     end
   end
 end
