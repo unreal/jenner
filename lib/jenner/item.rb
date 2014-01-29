@@ -85,14 +85,34 @@ module Jenner
       )
     end
 
+    def markdown?
+      File.extname(@path) == ".markdown"
+    end
+
+    def haml?
+      File.extname(@path) == ".haml"
+    end
+
     def markdown(s)
-      return s unless @path.split('.').last == "markdown"
+      return s unless markdown?
 
       Maruku.new(s).to_html
     end
 
+    def haml(s)
+      return s unless haml?
+
+      Haml::Engine.new(s).render
+    end
+
     def body
-      markdown(Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site }))
+      post_process Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })
+    end
+
+    def post_process(s)
+      s = markdown(s)
+      s = haml(s)
+      s
     end
 
     def render
@@ -102,7 +122,7 @@ module Jenner
     end
 
     def public_path
-      File.join(@site.root,'public',path.sub('.markdown','.html'))
+      File.join(@site.root,'public',path.sub('.markdown','.html').sub(".haml",".html"))
     end
 
     def generate!

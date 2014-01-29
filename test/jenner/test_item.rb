@@ -107,4 +107,15 @@ class TestItem < Test::Unit::TestCase
     item = Jenner::Item.new('embed_test.html', @site)
     assert_equal "\nsecret: 42\n\n", item.body
   end
+
+  def test_haml_item
+    item = Jenner::Item.new("haml_test.haml", @site)
+    assert_equal "<p>testing haml</p>\n\n", item.render
+  end
+
+  def test_haml_generation
+    item = Jenner::Item.new("haml_test.haml", @site)
+    item.generate!
+    assert File.exists?(site_file("public/haml_test.html"))
+  end
 end
