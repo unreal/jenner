@@ -17,6 +17,11 @@ class TestTemplate < Test::Unit::TestCase
     assert_equal "hi, {{name}}\n", template.body
   end
 
+  def test_has_access_to_site_as_liquid
+    template = Jenner::Template.new("{{site.root}}", @site)
+    assert_equal @site.root, template.render
+  end
+
   def test_include
     template = Jenner::Template.new("{% include 'test.html' %}", @site)
     assert_equal "hi, jay\n", template.render('name' => 'jay')
@@ -35,5 +40,15 @@ class TestTemplate < Test::Unit::TestCase
   def test_haml_from_file
     template = Jenner::Template.from_file(template_file('haml_template.haml'), @site)
     assert_equal "<!DOCTYPE html>\n", template.render
+  end
+
+  def test_haml_can_use_liquid
+    template = Jenner::Template.new("%p hi, {{name}}", @site, haml: true)
+    assert_equal "<p>hi, jay</p>\n", template.render('name' => 'jay')
+  end
+
+  def test_haml_has_access_to_liquid_context_in_body
+    template = Jenner::Template.new(%(%p hi, \#{name}), @site, haml: true)
+    assert_equal "<p>hi, jay</p>\n", template.body('name' => 'jay')
   end
 end

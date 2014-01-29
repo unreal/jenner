@@ -8,6 +8,16 @@ module Jenner
       Liquid::Template.file_system = Jenner::TemplateFileSystem.new(File.join(@root,'_templates'))
     end
 
+    def to_liquid
+      {
+        'root'      => @root,
+        'assets'    => assets,
+        'items'     => items,
+        'tag_names' => tag_names,
+        'tags'      => tags
+      }
+    end
+
     def site_path
       File.join(@root,"_site")
     end

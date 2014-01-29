@@ -1,14 +1,22 @@
 # encoding: UTF-8
 module Jenner
   class Template
-    attr_reader :body
-    def initialize(body, site)
+    def initialize(body, site, options={})
       @body = body
       @site = site
+      @haml = options[:haml]
+    end
+
+    def haml?
+      @haml
+    end
+
+    def body(context={})
+      haml? ? Haml::Engine.new(@body).render(Object.new, context) : @body
     end
 
     def render(context={})
-      Liquid::Template.parse(@body).render(context, registers: { site: @site })
+      Liquid::Template.parse(body).render(context.merge('site' => @site), registers: { site: @site }).to_s.encode("utf-8")
     end
 
     def self.from_file(file_path, site)
@@ -20,7 +28,7 @@ module Jenner
     end
 
     def self.from_haml(haml_body, site)
-      new(Haml::Engine.new(haml_body).render, site)
+      new(haml_body, site, haml: true)
     end
   end
 end
