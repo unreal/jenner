@@ -1,4 +1,4 @@
-# encoding: UTF-8
+# encoding: US-ASCII
 module Jenner
   class Item
     attr_reader :title, :date, :template_name, :data, :tags
@@ -92,7 +92,7 @@ module Jenner
     end
 
     def body
-      markdown(Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })).to_s.encode("UTF-8")
+      markdown(Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site }))
     end
 
     def render
