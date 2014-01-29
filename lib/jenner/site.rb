@@ -1,4 +1,4 @@
-# encoding: US-ASCII
+# encoding: utf-8
 module Jenner
   class Site
     attr_reader :root

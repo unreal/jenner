@@ -1,4 +1,4 @@
-# encoding: US-ASCII
+# encoding: utf-8
 require 'helper'
 
 class TestItem < Test::Unit::TestCase

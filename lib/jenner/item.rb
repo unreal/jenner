@@ -1,4 +1,4 @@
-# encoding: US-ASCII
+# encoding: utf-8
 module Jenner
   class Item
     attr_reader :title, :date, :template_name, :data, :tags
