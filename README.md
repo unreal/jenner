@@ -34,12 +34,14 @@ Your generated site will be in `./public`.
 
 ### Items
 
+Items can be created as HTML or [HAML](http://haml.info/) files.
+
 Here's an example (example.html):
 
     ---
     title:    'Example Page'
     date:     2014-01-23 17:02:00 -6
-    template: 'page'
+    template: 'page.html'
     ---
 
     <p>This is an example page.</p>
@@ -49,7 +51,7 @@ template can use the following data:
 
     {{item.title}} => "Example Page"
     {{item.data}}  => 2014-01-23 17:02:00 -6
-    {{item.template_name}} => "page"
+    {{item.template_path}} => "page.html"
     {{item.body}}  => "<p>This is an example page.</p>
     {{item.url}}   => "/example.html"
 
@@ -58,7 +60,7 @@ You can define additional pieces of data in the item header like this:
     ---
     title:    'Example Page'
     date:     2014-01-23 17:02:00 -6
-    template: 'page'
+    template: 'page.html'
     foo:      'bar'
     answer:   42
     ---
@@ -75,33 +77,45 @@ they will be processed as Markdown.
     ---
     title:    'Example Markdown Page'
     date:     2014-01-23 17:02:00 -6
-    template: 'page'
+    template: 'page.html'
     ---
 
     # This is an example page
 
 ### Templates
 
-Templates are just HTML files that use Liquid markup. Every item you
-create is rendered with a template that you specify in the item's
-header.
+Templates are just HTML or [HAML](http://haml.info/) files that use
+Liquid markup. Every item you create is rendered with a template that
+you specify in the item's header via the `template` attribute.
+
+HAML templates can use Liquid, but they don't have to. You could simply
+use the template's context in HAML:
+
+    %h1= item.title
+    = item.body
+
+instead of:
+
+    %h1 {{item.title}}
+    {{item.body}}
 
 Every item provides the following data at minimum:
 
     {{item.title}}
     {{item.date}}
-    {{item.template_name}}
+    {{item.template_path}}
     {{item.body}}
     {{item.url}}
+    {{site}}
 
 Additional pieces of data are available within `{{item.data}}` if they
 are defined in the item's YAML header.
 
 You can include other templates with the `{% include %}` tag.
 
-    {% include 'header' %}
+    {% include 'header.html' %}
     {{item.body}}
-    {% include 'footer' %}
+    {% include 'footer.html' %}
 
 ### Assets
 
@@ -119,7 +133,7 @@ a YAML string array e.g.:
     ---
     title:    'Example Page'
     date:     2014-01-23 17:02:00 -6
-    template: 'page'
+    template: 'page.html'
     tags:     [one, two, three]
     ---
 
@@ -155,6 +169,12 @@ to write anymore outside Ruby.
       </tr>
     <table>
 
+    <h1>Bunch of items</h1>
+    {{ 'blog\/' | items_from_path | assign_to: blog_posts }}
+    {% for blog_post in blog_posts %}
+      do something with {{blog_post}} here
+    {% endfor %}
+
 Some other useful helpers:
 
     {{ 'test.css' | stylesheet_tag }}
@@ -188,7 +208,7 @@ You can specify a custom url_format parameter in your YAML item header.
     ---
     title:      'test post'
     date:       2014-01-28 15:23:00 -6
-    template:   'post'
+    template:   'post.html'
     url_format: '%Y/%m/%d/:title'
     ---
 
