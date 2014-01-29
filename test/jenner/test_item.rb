@@ -105,7 +105,7 @@ class TestItem < Test::Unit::TestCase
 
   def test_item_from_path
     item = Jenner::Item.new('embed_test.html', @site)
-    assert_equal "\nsecret: 42\n\n", item.body
+    assert_equal "item: \nsecret: 42\n\n\n", item.render
   end
 
   def test_haml_item

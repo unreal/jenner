@@ -80,6 +80,7 @@ module Jenner
         'tags'          => @tags,
         'data'          => @data,
         'url'           => url,
+        'site'          => @site
       }
     end
 
@@ -97,26 +98,18 @@ module Jenner
       File.extname(@path) == ".haml"
     end
 
-    def markdown(s)
-      return s unless markdown?
-
-      Maruku.new(s).to_html
-    end
-
-    def haml(s)
-      return s unless haml?
-
-      Haml::Engine.new(s).render
+    def liquid_body
+      Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })
     end
 
     def body(context={})
-      post_process Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })
-    end
-
-    def post_process(s)
-      s = markdown(s)
-      s = haml(s)
-      s
+      if haml?
+        Haml::Engine.new(liquid_body).render(Object.new, context)
+      elsif markdown?
+        Maruku.new(liquid_body).to_html
+      else
+        liquid_body
+      end
     end
 
     def render
