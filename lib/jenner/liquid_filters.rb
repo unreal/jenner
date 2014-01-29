@@ -9,6 +9,10 @@ module Jenner
       @context.registers[:site].items.find { |item| item.path == path } || "Item with path '#{path}' not found"
     end
 
+    def items_from_path(path)
+      @context.registers[:site].items.select {|item| item.path =~ /^#{path}/ } || []
+    end
+
     def tag(name)
       @context.registers[:site].tags.find { |tag| tag.name == name } || "Tag with name '#{name}' not found"
     end

@@ -14,6 +14,12 @@ class TestLiquidFilters < Test::Unit::TestCase
     assert Variable.new("'test.html' | item_from_path").render(@context).is_a?(Jenner::Item)
   end
 
+  def test_items_from_path
+    a = Variable.new("'[^\/]+\.html' | items_from_path").render(@context)
+    assert a.is_a?(Array)
+    assert_equal 3, a.length
+  end
+
   def test_asset_from_path
     assert Variable.new("'foo.txt' | asset_from_path").render(@context).is_a?(Jenner::Asset)
   end
