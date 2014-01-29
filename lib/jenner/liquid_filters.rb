@@ -6,11 +6,11 @@ module Jenner
     end
 
     def item_from_path(path)
-      @context.registers[:site].items.find { |item| item.path == path } || "Item with path '#{path}' not found"
+      @context.registers[:site].items.find { |item| item.local_path == path } || "Item with path '#{path}' not found"
     end
 
     def items_from_path(path)
-      @context.registers[:site].items.select {|item| item.path =~ /^#{path}/ } || []
+      @context.registers[:site].items.select {|item| item.local_path =~ /^#{path}/ } || []
     end
 
     def tag(name)

@@ -68,17 +68,17 @@ class TestItem < Test::Unit::TestCase
   end
 
   def test_underscored_title
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     assert_equal "test-post", item.underscored_title
   end
 
   def test_relative_path
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     assert_equal "blog/", item.relative_path
   end
 
   def test_output_filename_on_custom_url
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     assert_equal "index.html", item.output_filename
   end
 
@@ -88,17 +88,17 @@ class TestItem < Test::Unit::TestCase
   end
 
   def test_custom_url
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     assert_equal "/blog/2014/01/28/test-post", item.url
   end
 
   def test_public_path_on_custom_url
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     assert_equal site_file("public/blog/2014/01/28/test-post/index.html"), item.public_path
   end
 
   def test_generate_on_custom_url
-    item = Jenner::Item.new('blog/20140128_test_post.markdown', @site)
+    item = Jenner::Item.new('blog/20140128_TEST_post.markdown', @site)
     item.generate!
     assert File.exists?(site_file("public/blog/2014/01/28/test-post/index.html"))
   end

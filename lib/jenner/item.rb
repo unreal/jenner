@@ -32,6 +32,10 @@ module Jenner
       "#{path}/"
     end
 
+    def local_path
+      @path
+    end
+
     def path
       return @path if @url_format.nil?
 
@@ -57,7 +61,7 @@ module Jenner
     end
 
     def underscored_title
-      @title.gsub(/[^\w]+/,"-")
+      @title.gsub(/[^\w]+/,"-").downcase
     end
 
     def formatted_url
