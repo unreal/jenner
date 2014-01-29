@@ -110,7 +110,7 @@ class TestItem < Test::Unit::TestCase
 
   def test_haml_item
     item = Jenner::Item.new("haml_test.haml", @site)
-    assert_equal "<p>testing haml</p>\n\n", item.render
+    assert_equal "<p>liquid: haml test</p>\n<p>haml: haml test</p>\n\n", item.render
   end
 
   def test_haml_generation

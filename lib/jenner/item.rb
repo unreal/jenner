@@ -102,9 +102,9 @@ module Jenner
       Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })
     end
 
-    def body(context={})
+    def body
       if haml?
-        Haml::Engine.new(liquid_body).render(Object.new, context)
+        Haml::Engine.new(liquid_body).render(self, :site => @site)
       elsif markdown?
         Maruku.new(liquid_body).to_html
       else
