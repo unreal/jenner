@@ -51,4 +51,10 @@ class TestTemplate < Test::Unit::TestCase
     template = Jenner::Template.new(%(%p hi, \#{name}), @site, haml: true)
     assert_equal "<p>hi, jay</p>\n", template.body('name' => 'jay')
   end
+
+  def test_haml_body_gets_passed_through_with_render
+    template = Jenner::Template.new(%(%p hi, \#{name}), @site, haml: true)
+    assert_equal "<p>hi, jay</p>\n", template.render('name' => 'jay')
+  end
+
 end

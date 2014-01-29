@@ -109,7 +109,7 @@ module Jenner
       Haml::Engine.new(s).render
     end
 
-    def body
+    def body(context={})
       post_process Liquid::Template.parse(@body).render({'self' => self.to_liquid_without_body}, registers: { site: @site })
     end
 

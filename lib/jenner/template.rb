@@ -16,7 +16,7 @@ module Jenner
     end
 
     def render(context={})
-      Liquid::Template.parse(body).render(context.merge('site' => @site), registers: { site: @site }).to_s.encode("utf-8")
+      Liquid::Template.parse(body(context.merge('site' => @site))).render(context.merge('site' => @site), registers: { site: @site }).to_s.encode("utf-8")
     end
 
     def self.from_file(file_path, site)
