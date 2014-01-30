@@ -2,6 +2,7 @@ require "bundler/setup"
 require "haml"
 require "liquid"
 require "maruku"
+require "ostruct"
 require "sass"
 require "webrick"
 
@@ -31,6 +32,22 @@ module Jenner
       server.start
     else
       puts "Site does not appear to be built. Run 'jenner build' first"
+    end
+  end
+
+  def self.deep_struct(obj)
+    case obj
+    when Hash
+      obj = obj.clone
+      obj.each do |key,value|
+        obj[key] = Jenner.deep_struct(value)
+      end
+      OpenStruct.new(obj)
+    when Array
+      obj = obj.clone
+      obj.map! {|i| Jenner.deep_struct(i) }
+    else
+      obj
     end
   end
 end

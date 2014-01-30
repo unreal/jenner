@@ -104,7 +104,7 @@ module Jenner
 
     def body
       if haml?
-        Haml::Engine.new(liquid_body).render(self, :site => @site)
+        Haml::Engine.new(liquid_body).render(Jenner.deep_struct(self.to_liquid_without_body), :site => Jenner.deep_struct(@site.to_liquid))
       elsif markdown?
         Maruku.new(liquid_body).to_html
       else

@@ -2,7 +2,8 @@
 title:    'haml test'
 date:     2014-01-23 17:02:00 -6
 template: 'post.html'
+foo:      'bar'
 ---
 
-%p liquid: {{self.title}}
-%p haml: #{self.title}
+%p liquid: {{self.title}} {{self.data.foo}}
+%p haml: #{self.title} #{self.data.foo}
