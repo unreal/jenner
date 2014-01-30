@@ -28,8 +28,8 @@ class TestTemplate < Test::Unit::TestCase
   end
 
   def test_include_haml
-    template = Jenner::Template.new("{% include 'haml_template.haml' %}", @site)
-    assert_equal "<!DOCTYPE html>\n", template.render
+    template = Jenner::Template.new("{% include 'haml_template.haml' with item %}", @site)
+    assert_equal "<p>foo</p>\n", template.render('item' => {'body' => 'foo'})
   end
 
   def test_support_for_haml
@@ -39,7 +39,7 @@ class TestTemplate < Test::Unit::TestCase
 
   def test_haml_from_file
     template = Jenner::Template.from_file(template_file('haml_template.haml'), @site)
-    assert_equal "<!DOCTYPE html>\n", template.render
+    assert_equal "<p>foo</p>\n", template.render('item' => { 'body' => 'foo' })
   end
 
   def test_haml_can_use_liquid

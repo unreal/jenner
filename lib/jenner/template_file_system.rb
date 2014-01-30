@@ -12,7 +12,7 @@ module Jenner
       raise FileSystemError, "No such template '#{template_path}'" unless File.exists?(full_path)
 
       if File.extname(template_path) == ".haml"
-        Haml::Engine.new(File.read(full_path)).render
+        Haml::Engine.new(File.read(full_path)).render(Jenner.deep_struct(context.environments.first))
       else
         File.read(full_path)
       end

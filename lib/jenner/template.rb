@@ -12,7 +12,7 @@ module Jenner
     end
 
     def body(context={})
-      haml? ? Haml::Engine.new(@body).render(Object.new, context) : @body
+      haml? ? Haml::Engine.new(@body).render(Jenner.deep_struct(context)) : @body
     end
 
     def render(context={})
