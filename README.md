@@ -29,6 +29,8 @@ TODO: add a `jenner new` command to create site skeleton
 5. Create a template in `_templates` (e.g. page.html)
 6. Start creating items (pages) in `_site`
 7. `jenner build`
+8. `jenner serve`
+9. visit `localhost:9191`
 
 Your generated site will be in `./public`.
 
